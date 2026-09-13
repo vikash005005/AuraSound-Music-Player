@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSound - Modern Music Player</title>
+    <meta name="description" content="A sleek, modern, and responsive web music player app featuring dynamic playlists, dark mode, favorites, and ambient audio visualizer.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-compact-disc brand-icon"></i>
+                </div>
+                <span class="brand-name">Aura<span class="brand-highlight">Sound</span></span>
+                <button class="close-sidebar-btn" id="close-sidebar" aria-label="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-group">
+                    <span class="nav-heading">MENU</span>
+                    <a href="#" class="nav-link active" data-view="home">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-link" data-view="library">
+                        <i class="fa-solid fa-music"></i>
+                        <span>Library</span>
+                    </a>
+                    <a href="#" class="nav-link" data-view="favorites">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>Favorites</span>
+                        <span class="badge" id="fav-count-badge">0</span>
+                    </a>
+                    <a href="#" class="nav-link" data-view="recent">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Recently Played</span>
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-heading">PLAYLISTS</span>
+                    <a href="#" class="nav-link playlist-filter" data-genre="all">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>All Tracks</span>
+                    </a>
+                    <a href="#" class="nav-link playlist-filter" data-genre="synthwave">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Synthwave & Electro</span>
+                    </a>
+                    <a href="#" class="nav-link playlist-filter" data-genre="chillout">
+                        <i class="fa-solid fa-cloud-moon"></i>
+                        <span>Chillout & Ambient</span>
+                    </a>
+                    <a href="#" class="nav-link playlist-filter" data-genre="lofi">
+                        <i class="fa-solid fa-mug-hot"></i>
+                        <span>Lo-Fi Beats</span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Theme Toggle Box -->
+            <div class="sidebar-footer">
+                <div class="theme-toggle-box">
+                    <div class="theme-info">
+                        <i class="fa-solid fa-moon theme-icon" id="sidebar-theme-icon"></i>
+                        <span id="theme-label-text">Dark Mode</span>
+                    </div>
+                    <button class="theme-switch" id="theme-toggle-btn" aria-label="Toggle Theme">
+                        <span class="switch-thumb"></span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Navigation Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search by song, artist, or album..." autocomplete="off">
+                        <button class="clear-search-btn" id="clear-search" aria-label="Clear Search">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-icon-btn" id="quick-theme-toggle" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+
+                    <div class="user-profile">
+                        <div class="avatar-ring">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <span class="username">Music Explorer</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Scrollable Content View -->
+            <div class="content-scrollable">
+                <!-- Featured Music Banner -->
+                <section class="hero-banner" id="hero-banner">
+                    <div class="hero-backdrop" id="hero-backdrop"></div>
+                    <div class="hero-content">
+                        <div class="hero-cover-wrapper">
+                            <img src="images/cover1.png" alt="Featured Cover" id="hero-cover-img" class="hero-cover-img">
+                        </div>
+                        <div class="hero-details">
+                            <div class="hero-pill-badge">
+                                <i class="fa-solid fa-fire"></i>
+                                <span>FEATURED TRACK</span>
+                            </div>
+                            <h1 class="hero-title" id="hero-title-text">Midnight Cyber City</h1>
+                            <div class="hero-meta">
+                                <span class="hero-artist" id="hero-artist-text">Aura Wave</span>
+                                <span class="meta-dot">•</span>
+                                <span class="hero-sub" id="hero-genre-text">SYNTHWAVE • Neon Nights</span>
+                            </div>
+                            <p class="hero-description" id="hero-description">Immerse yourself in top atmospheric beats, high-energy synthwaves, and crisp soundscapes.</p>
+
+                            <div class="hero-actions">
+                                <button class="btn btn-primary" id="hero-play-btn">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Play Now</span>
+                                </button>
+                                <button class="btn btn-secondary" id="hero-fav-btn">
+                                    <i class="fa-regular fa-heart"></i>
+                                    <span>Favorite</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dynamic View Section Header -->
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title" id="section-title">All Tracks</h2>
+                        <span class="track-count" id="track-count">0 tracks</span>
+                    </div>
+                    <div class="header-actions-wrap">
+                        <button class="btn btn-add-song" id="open-add-song-btn" title="Add Song to Playlist">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Song</span>
+                        </button>
+                        <div class="view-options">
+                            <button class="view-btn active" id="view-list-btn" title="List View"><i class="fa-solid fa-list"></i></button>
+                            <button class="view-btn" id="view-grid-btn" title="Grid View"><i class="fa-solid fa-border-all"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Playlist Tracks Container -->
+                <section class="playlist-section">
+                    <div class="songs-container list-view" id="songs-container">
+                        <!-- Dynamic Songs rendered via script.js -->
+                    </div>
+
+                    <div class="empty-state hidden" id="empty-state">
+                        <i class="fa-solid fa-compact-disc empty-icon"></i>
+                        <h3>No Tracks Found</h3>
+                        <p>Try searching for a different title, artist, or clear your current filter.</p>
+                        <button class="btn btn-secondary" id="reset-search-btn">Show All Songs</button>
+                    </div>
+                </section>
+
+                <!-- Recently Played Horizontal Carousel -->
+                <section class="recent-section" id="recent-section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left title-icon"></i> Recently Played</h2>
+                    </div>
+                    <div class="recent-carousel" id="recent-carousel">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Bottom Music Player Controls Bar -->
+        <footer class="player-bar">
+            <!-- Left Track Info -->
+            <div class="player-track-info">
+                <div class="player-art-wrap">
+                    <img src="images/default-cover.png" alt="Song Cover" id="player-cover-img" class="player-cover-img">
+                    <div class="playing-overlay" id="playing-overlay">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+                </div>
+                <div class="player-meta">
+                    <span class="player-song-title" id="player-title">Select a track</span>
+                    <span class="player-song-artist" id="player-artist">AuraSound Player</span>
+                </div>
+                <button class="track-fav-btn" id="player-fav-btn" aria-label="Favorite Track" title="Favorite">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+
+            <!-- Center Controls & Progress -->
+            <div class="player-center-controls">
+                <div class="control-buttons">
+                    <button class="control-btn" id="btn-shuffle" title="Shuffle (Off)" aria-label="Shuffle">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button class="control-btn" id="btn-prev" title="Previous Track" aria-label="Previous">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button class="control-btn play-pause-btn" id="btn-play-pause" title="Play Track" aria-label="Play">
+                        <i class="fa-solid fa-play" id="play-pause-icon"></i>
+                    </button>
+                    <button class="control-btn" id="btn-next" title="Next Track" aria-label="Next">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button class="control-btn" id="btn-repeat" title="Repeat (Off)" aria-label="Repeat">
+                        <i class="fa-solid fa-repeat"></i>
+                        <span class="repeat-badge" id="repeat-badge">1</span>
+                    </button>
+                </div>
+
+                <div class="progress-bar-container">
+                    <span class="time-stamp" id="current-time">0:00</span>
+                    <div class="seek-slider-wrapper">
+                        <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" aria-label="Song Progress">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="time-stamp" id="total-duration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Right Controls: Visualizer & Volume -->
+            <div class="player-right-controls">
+                <!-- Audio Equalizer Bars -->
+                <div class="equalizer-visualizer" id="equalizer-bars" title="Playback Visualizer">
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                </div>
+
+                <div class="volume-container">
+                    <button class="volume-btn" id="btn-volume" title="Mute/Unmute" aria-label="Volume Control">
+                        <i class="fa-solid fa-volume-high" id="volume-icon"></i>
+                    </button>
+                    <div class="volume-slider-wrapper">
+                        <input type="range" id="volume-bar" min="0" max="100" value="80" step="1" aria-label="Volume Level">
+                        <div class="volume-fill" id="volume-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- HTML5 Audio Element -->
+        <audio id="audio-player" preload="metadata"></audio>
+    </div>
+
+    <!-- Add Song Modal -->
+    <div class="modal-overlay hidden" id="add-song-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-icon">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+                    <h3>Add Song to Playlist</h3>
+                </div>
+                <button class="modal-close-btn" id="close-modal-btn" aria-label="Close Modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="add-song-form" class="modal-body">
+                <!-- Audio File Selection Area -->
+                <div class="form-group">
+                    <label class="form-label">Select Audio File <span class="required">*</span></label>
+                    <div class="file-drop-zone" id="file-drop-zone">
+                        <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                        <span class="drop-text" id="file-drop-text">Click or drag & drop MP3, WAV, or OGG file</span>
+                        <input type="file" id="song-file-input" accept="audio/*,.mp3,.wav,.ogg,.m4a" required hidden>
+                        <button type="button" class="btn btn-secondary btn-sm" id="select-file-trigger-btn">Browse File</button>
+                    </div>
+                </div>
+
+                <!-- Form Inputs -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="song-title-input" class="form-label">Song Title</label>
+                        <input type="text" id="song-title-input" class="form-input" placeholder="Auto-filled from filename" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="song-artist-input" class="form-label">Artist Name</label>
+                        <input type="text" id="song-artist-input" class="form-input" placeholder="Default: Unknown Artist" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="song-album-input" class="form-label">Album Name</label>
+                        <input type="text" id="song-album-input" class="form-input" placeholder="Default: Custom Track" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cover Artwork (Optional)</label>
+                        <div class="cover-input-wrapper">
+                            <input type="file" id="cover-file-input" accept="image/*" hidden>
+                            <button type="button" class="btn btn-secondary btn-sm" id="select-cover-btn">
+                                <i class="fa-regular fa-image"></i>
+                                <span id="cover-file-label">Choose Image</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancel-add-song-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-add-song-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add Song</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
